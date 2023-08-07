@@ -2,6 +2,7 @@ from dateutil import parser
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 
 
@@ -10,11 +11,12 @@ def convert_dates_to_iso(df):
     A function to convert all date columns in a DataFrame to ISO 8601 format.
     
     Parameters:
-    df: a pandas DataFrame
+        df: a pandas DataFrame
     
     Returns:
-    df: the updated DataFrame with date columns in ISO 8601 format
+        df: the updated DataFrame with date columns in ISO 8601 format
     """
+    
     # Loop through all columns in the DataFrame
     for col in df.columns:
         # Check if the column data type is object
@@ -344,3 +346,53 @@ def check_for_imbalanced_dataset(df):
         print(f"- The dataframe is balanced, with an imbalance ratio of {round(imbalance_ratio, 2)}.")
 
 
+def percentage_stacked_plot(df, columns_to_plot, super_title):
+    """
+    Prints a 100% stacked plot of the response variable for independent 
+        variable of the list columns_to_plot.
+    Parameters:
+        df (DataFrame): The DataFrame containing the data
+        columns_to_plot (list of string): Names of the variables to plot
+        super_title (string): Super title of the visualization
+    Returns:
+        None
+    """
+    
+    number_of_columns = 2
+    number_of_rows = math.ceil(len(columns_to_plot)/2)
+
+    # create a figure
+    fig = plt.figure(figsize=(12, 5 * number_of_rows)) 
+    fig.suptitle(super_title, fontsize=22,  y=.95)
+ 
+
+    # loop to each column name to create a subplot
+    for index, column in enumerate(columns_to_plot, 1):
+
+        # create the subplot
+        ax = fig.add_subplot(number_of_rows, number_of_columns, index)
+
+        # calculate the percentage of observations of the response variable for each group of the independent variable
+        # 100% stacked bar plot
+        prop_by_independent = pd.crosstab(df[column], df['Churn']).apply(lambda x: x/x.sum()*100, axis=1)
+
+        prop_by_independent.plot(kind='bar', ax=ax, stacked=True,
+                                 rot=0, color=['seagreen','firebrick'])
+        
+        # set the legend in the upper right corner
+        ax.legend(loc="upper right", bbox_to_anchor=(0.62, 0.5, 0.5, 0.5),
+                  title='Churn', fancybox=True)
+
+        # set title and labels
+        ax.set_title('Unique users by ' + column,
+                     fontsize=16, loc='left')
+
+        ax.tick_params(rotation='auto')
+
+        # eliminate the frame from the plot
+        spine_names = ('top', 'right', 'bottom', 'left')
+        for spine_name in spine_names:
+            ax.spines[spine_name].set_visible(False)
+
+        # Adjust the spacing between subplots
+        plt.subplots_adjust(hspace=0.5)
