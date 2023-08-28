@@ -1,5 +1,4 @@
-![image](https://github.com/algerza/churn_prediction_model/blob/main/cover.jpg)
-
+![alt text](https://github.com/algerza/churn_prediction_model/blob/master/cover.jpg?raw=true)
 
 # Churn prediction model
 
