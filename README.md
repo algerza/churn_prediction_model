@@ -1,3 +1,6 @@
+![image](https://github.com/algerza/churn_prediction_model/blob/main/cover.jpg)
+
+
 # Churn prediction model
 
 
