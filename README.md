@@ -20,3 +20,6 @@ New version from IBM: https://community.ibm.com/community/user/businessanalytics
 0. Clean data
 1. Exploratory data analysis
 2. Modelling
+
+### Results visualisation
+- Tableau viz: https://public.tableau.com/app/profile/alvaro8136/viz/ChurnModelResults/ExplainableModelStepbystep
